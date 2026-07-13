@@ -128,9 +128,7 @@ This project is licensed under the **GNU Affero General Public License v3.0** - 
 ---
 
 ## Author
-[YOUR NAME HERE]
+[Patnam Koushik]
 
 ---
 
-## Original Author
-Edoardo Baldoni ([emalderson](https://github.com/emalderson))
