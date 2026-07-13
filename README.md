@@ -1,10 +1,7 @@
 # ThePhish
 ## An Automated Phishing Email Analysis Tool
 
-<div align="center">
-  <img src="pictures/logo.png" alt="ThePhish Logo" width="800"> 
-  <br><br>
-</div>
+
 
 ---
 
