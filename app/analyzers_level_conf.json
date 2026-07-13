@@ -1,0 +1,30 @@
+{
+  "DomainMailSPFDMARC_Analyzer_1_1": {
+    "dataType": [
+      "url",
+      "ip",
+      "domain",
+      "mail"
+    ],
+    "levelMapping": {
+      "malicious": "suspicious",
+      "suspicious": "suspicious",
+      "safe": "safe",
+      "info": "info"
+    }
+  },
+  "MISP_2_1": {
+    "dataType": [
+      "url",
+      "ip",
+      "domain",
+      "mail"
+    ],
+    "levelMapping": {
+      "malicious": "malicious",
+      "suspicious": "malicious",
+      "safe": "safe",
+      "info": "info"
+    }
+  }
+}

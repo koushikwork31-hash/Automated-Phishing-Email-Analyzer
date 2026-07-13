@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "disable_existing_loggers": true,
+  "formatters": {
+    "simple": {
+      "format": "[%(levelname)s] %(message)s"
+    },
+    "detailed": {
+      "format": "[%(asctime)s] - %(module)s - %(levelname)s - %(message)s",
+      "datefmt": "%d/%b/%Y %H:%M:%S"
+    }
+  },
+  "handlers": {
+    "console": {
+      "level": "INFO",
+      "class": "logging.StreamHandler",
+      "formatter": "simple"
+    },
+    "file": {
+      "level": "DEBUG",
+      "class": "logging.FileHandler",
+      "filename": "thephish.log",
+      "formatter": "detailed"
+    }
+  },
+  "loggers": {
+    "": {
+      "level": "DEBUG",
+      "handlers": [
+        "file",
+        "console"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+version: '3'
+services:
+  thehive:
+    image: strangebee/thehive:3.5.0-1
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+    ports:
+      - "9000:9000"
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx2g
+    volumes:
+      - ./thehive/application.conf:/etc/thehive/application.conf
+      - thehive_data:/opt/thp/thehive/data
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    restart: unless-stopped
+    environment:
+      - http.host=0.0.0.0
+      - transport.host=0.0.0.0
+      - xpack.security.enabled=false
+      - cluster.name=thp
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx2g"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  cortex:
+    image: strangebee/cortex:3.1.1-1
+    restart: unless-stopped
+    ports:
+      - "9001:9001"
+    depends_on:
+      - elasticsearch
+    environment:
+      - job_directory=/tmp/cortex-jobs
+    volumes:
+      - ./cortex/application.conf:/etc/cortex/application.conf
+      - cortex_data:/tmp/cortex-jobs
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  misp:
+    image: coolacid/misp-docker:core-latest
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - misp_data:/var/www/MISP/app/files
+      - misp_config:/var/www/MISP/app/Config
+
+  thephish:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - thehive
+      - cortex
+      - misp
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./thephish_conf_files/configuration.json:/app/configuration.json
+      - ./thephish_conf_files/analyzers_level_conf.json:/app/analyzers_level_conf.json
+      - ./thephish_conf_files/whitelist.json:/app/whitelist.json
+
+volumes:
+  es_data:
+  thehive_data:
+  cortex_data:
+  misp_data:
+  misp_config:
