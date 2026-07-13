@@ -68,7 +68,8 @@ function list_emails() {
       var data = JSON.parse(request.responseText);
       progress_bar.classList.add("d-none");
       div_table.classList.remove("d-none");
-      if(data.length == 0) {
+      // Handle null/undefined case: treat as empty array
+      if(!data || data.length == 0) {
         var tbody = document.querySelector("tbody");
         var tr = document.createElement("tr");
         var td = document.createElement("td");

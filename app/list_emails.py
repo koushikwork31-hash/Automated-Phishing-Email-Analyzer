@@ -220,7 +220,7 @@ def main():
             logging.config.dictConfig(log_conf_dict)
     except Exception as e: 
         print("[ERROR]_[list_emails]: Error while trying to open the file 'logging_conf.json'. It cannot be read or it is not valid: {}".format(traceback.format_exc()))
-        return 
+        return [] 
     log = logging.getLogger(__name__)
 
     # IMAP configuration
@@ -237,20 +237,20 @@ def main():
 
     except Exception as e: 
         log.error("Error while trying to open the file 'configuration.json': {}".format(traceback.format_exc()))
-        return
+        return []
 
     # Connect to IMAP server
     try:
         connection = connect_to_IMAP_server()
     except Exception as e:
         log.error("Error while trying to connect to IMAP server: {}".format(traceback.format_exc()))
-        return
+        return []
 
     # Call the retrieve_emails function
     try:
         emails_info = retrieve_emails(connection)
     except Exception as e:
         log.error("Error while trying to retrieve the emails: {}".format(traceback.format_exc()))
-        return
+        return []
     return emails_info
 
